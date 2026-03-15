@@ -1,3 +1,8 @@
+# Endpoint для AI-рекомендаций.
+# Принимает сообщения пользователя,
+# отправляет запрос к AI logic,
+# возвращает ответ ассистента.
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import google.api_core.exceptions

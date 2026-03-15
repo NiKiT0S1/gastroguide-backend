@@ -1,3 +1,8 @@
+# Главная точка входа backend-приложения.
+# Здесь создаётся экземпляр FastAPI,
+# подключаются роутеры,
+# настраивается CORS middleware.
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text

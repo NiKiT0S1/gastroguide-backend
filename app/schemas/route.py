@@ -1,3 +1,6 @@
+# Pydantic-схемы ответа маршрута:
+# distance, duration, coordinates.
+
 from pydantic import BaseModel
 
 

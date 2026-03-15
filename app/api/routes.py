@@ -1,3 +1,6 @@
+# Endpoint построения маршрута между пользователем и заведением.
+# Использует OpenRouteService API.
+
 import requests
 from fastapi import APIRouter, HTTPException, Query
 

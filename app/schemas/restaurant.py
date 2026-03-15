@@ -1,3 +1,5 @@
+# Pydantic-схемы для валидации данных заведений.
+
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 

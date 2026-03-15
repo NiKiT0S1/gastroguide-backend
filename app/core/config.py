@@ -1,3 +1,7 @@
+# Конфигурация приложения.
+# Файл загружает переменные окружения из .env
+# и предоставляет их для использования в проекте.
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 

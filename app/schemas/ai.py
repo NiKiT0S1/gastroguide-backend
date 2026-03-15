@@ -1,3 +1,9 @@
+# Pydantic-схемы для AI-чата.
+# Описывают структуру:
+# - входящего сообщения
+# - истории диалога
+# - исходящего AI-ответа
+
 from pydantic import BaseModel, Field
 from typing import Literal
 

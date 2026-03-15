@@ -1,3 +1,7 @@
+# REST endpoints для работы с заведениями:
+# получение списка заведений,
+# получение конкретного заведения по id.
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, selectinload
 from sqlalchemy import or_

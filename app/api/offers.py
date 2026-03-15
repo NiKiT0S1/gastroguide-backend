@@ -1,3 +1,8 @@
+# API endpoints для работы с акциями заведений.
+# Файл отвечает за:
+# - получение всех акций
+# - получение одной акции по id
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 

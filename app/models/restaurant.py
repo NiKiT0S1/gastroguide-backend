@@ -1,3 +1,7 @@
+# SQLAlchemy-модель заведения.
+# Описывает таблицу restaurants и её поля,
+# включая связи с меню.
+
 from datetime import datetime, timezone
 
 from sqlalchemy import String, Float, Integer, Boolean, DateTime, Text

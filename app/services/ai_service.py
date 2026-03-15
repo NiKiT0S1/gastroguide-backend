@@ -1,3 +1,5 @@
+# Бизнес-логика AI рекомендаций.
+
 import google.generativeai as genai
 from sqlalchemy.orm import Session
 

@@ -1,3 +1,6 @@
+# Pydantic-схемы для акций.
+# Используются для валидации и возврата данных по offers.
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
