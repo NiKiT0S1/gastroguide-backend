@@ -1,17 +1,16 @@
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class MenuItemResponse(BaseModel):
     id: int
-    restaurant_id: int
+    restaurantId: int = Field(validation_alias="restaurant_id")
     name: str
     price: str
     emoji: str
     popular: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RestaurantResponse(BaseModel):
@@ -35,10 +34,11 @@ class RestaurantResponse(BaseModel):
     lng: float
     features: list[str]
     photos: list[str]
-    price_range: int
-    created_at: datetime
-    updated_at: datetime
+
+    priceRange: int = Field(validation_alias="price_range")
+    createdAt: datetime = Field(validation_alias="created_at")
+    updatedAt: datetime = Field(validation_alias="updated_at")
+
     menu: list[MenuItemResponse] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

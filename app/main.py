@@ -8,6 +8,7 @@ from app.models import Restaurant
 from app.api.restaurants import router as restaurants_router
 from app.api.offers import router as offers_router
 from app.api.ai import router as ai_router
+from app.api.routes import router as routes_router
 
 app = FastAPI()
 
@@ -27,6 +28,7 @@ def on_startup():
 app.include_router(restaurants_router)
 app.include_router(offers_router)
 app.include_router(ai_router)
+app.include_router(routes_router)
 
 
 @app.get("/")

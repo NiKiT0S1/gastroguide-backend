@@ -22,16 +22,20 @@ def get_restaurants(db: Session = Depends(get_db)):
     restaurants = db.query(Restaurant).all()
     return restaurants
 
-@router.get("/search")
+@router.get("/search", response_model=list[RestaurantResponse])
 def search_restaurants(q: str, db: Session = Depends(get_db)):
-    restaurants = db.query(Restaurant).filter(
-        or_(
-            Restaurant.name.ilike(f"%{q}%"),
-            Restaurant.type.ilike(f"%{q}%"),
-            Restaurant.description.ilike(f"%{q}%")
+    restaurants = (
+        db.query(Restaurant)
+        .options(selectinload(Restaurant.menu))
+        .filter(
+            or_(
+                Restaurant.name.ilike(f"%{q}%"),
+                Restaurant.type.ilike(f"%{q}%"),
+                Restaurant.description.ilike(f"%{q}%")
+            )
         )
-    ).all()
-
+        .all()
+    )
     return restaurants
 
 ######################################################################

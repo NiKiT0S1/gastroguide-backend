@@ -1,9 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class OfferResponse(BaseModel):
     id: int
-    restaurant_id: int
+    restaurantId: int = Field(validation_alias="restaurant_id")
     title: str
     description: str
     discount: str
@@ -11,5 +11,4 @@ class OfferResponse(BaseModel):
     emoji: str
     color: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
