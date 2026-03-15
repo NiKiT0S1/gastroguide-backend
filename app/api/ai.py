@@ -11,7 +11,11 @@ router = APIRouter(prefix="/api/v1/ai", tags=["AI"])
 @router.post("/chat", response_model=AIResponse)
 def chat_ai(request: AIRequest, db: Session = Depends(get_db)):
     try:
-        answer = generate_ai_response(request.message, db)
+        answer = generate_ai_response(
+            message=request.message,
+            history=request.history,
+            db=db,
+        )
         return {"response": answer}
     except google.api_core.exceptions.GoogleAPIError as e:
         raise HTTPException(status_code=502, detail=f"Gemini API error: {str(e)}")

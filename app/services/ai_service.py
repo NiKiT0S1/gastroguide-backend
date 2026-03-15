@@ -43,20 +43,34 @@ Description: {r.description}
 
     return text
 
+def build_history_context(history):
+    if not history:
+        return ""
 
-def generate_ai_response(message: str, db: Session):
+    lines = []
+    for msg in history[-10:]:
+        role = "User" if msg.role == "user" else "Assistant"
+        lines.append(f"{role}: {msg.text}")
+
+    return "\n".join(lines)
+
+def generate_ai_response(message: str, history: list, db: Session):
     restaurants = db.query(Restaurant).all()
     menu_items = db.query(MenuItem).all()
     offers = db.query(Offer).all()
 
-    context = build_restaurants_context(restaurants, menu_items, offers)
+    restaurants_context = build_restaurants_context(restaurants, menu_items, offers)
+    history_context = build_history_context(history)
 
     prompt = f"""
 You are GastroGuide AI assistant for restaurant recommendations in Astana.
 
 Available restaurants:
 
-{context}
+{restaurants_context}
+
+Previous conversation:
+{history_context}
 
 User question:
 {message}
