@@ -44,3 +44,12 @@ class RestaurantResponse(BaseModel):
     menu: list[MenuItemResponse] = []
 
     model_config = ConfigDict(from_attributes=True)
+
+class RestaurantShortResponse(BaseModel):
+    id: int
+    name: str
+    type: str
+    rating: float | None
+    dist: str | None
+
+    model_config = ConfigDict(from_attributes=True)

@@ -16,6 +16,7 @@ from app.api.ai import router as ai_router
 from app.api.routes import router as routes_router
 from app.api.auth import router as auth_router
 from app.api.users import router as users_router
+from app.api.favorites import router as favorites_router
 
 app = FastAPI()
 
@@ -38,6 +39,7 @@ app.include_router(ai_router)
 app.include_router(routes_router)
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(favorites_router)
 
 
 @app.get("/")
