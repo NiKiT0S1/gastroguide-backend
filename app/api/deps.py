@@ -12,6 +12,11 @@ from app.models.user import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
+oauth2_scheme_optional = OAuth2PasswordBearer(
+    tokenUrl="/api/v1/auth/login",
+    auto_error=False
+)
+
 
 def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
@@ -39,4 +44,26 @@ def get_current_user(
     if user is None:
         raise credentials_exception
 
+    return user
+
+def get_optional_user(
+    token: str | None = Depends(oauth2_scheme_optional),
+    db: Session = Depends(get_db),
+) -> User | None:
+    if not token:
+        return None
+
+    try:
+        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+
+        user_id: str = payload.get("sub")
+        token_type: str = payload.get("type")
+
+        if user_id is None or token_type != "access":
+            return None
+
+    except JWTError:
+        return None
+
+    user = db.query(User).filter(User.id == int(user_id)).first()
     return user

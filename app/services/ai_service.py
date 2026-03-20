@@ -56,13 +56,25 @@ def build_history_context(history):
 
     return "\n".join(lines)
 
-def generate_ai_response(message: str, history: list, db: Session):
+def build_favorites_context(favorites):
+    if not favorites:
+        return "User has no favorite restaurants yet."
+
+    lines = []
+    for r in favorites:
+        lines.append(f"- {r.name} ({r.type}, rating {r.rating}, price {r.price})")
+    return "\n".join(lines)
+
+def generate_ai_response(message: str, history: list, favorites: list | None = None, db: Session = None):
+    favorites = favorites or []
+
     restaurants = db.query(Restaurant).all()
     menu_items = db.query(MenuItem).all()
     offers = db.query(Offer).all()
 
     restaurants_context = build_restaurants_context(restaurants, menu_items, offers)
     history_context = build_history_context(history)
+    favorites_context = build_favorites_context(favorites)
 
     prompt = f"""
 You are GastroGuide AI assistant for restaurant recommendations in Astana.
@@ -73,6 +85,9 @@ Available restaurants:
 
 Previous conversation:
 {history_context}
+
+Favorite restaurants of the user:
+{favorites_context}
 
 User question:
 {message}
