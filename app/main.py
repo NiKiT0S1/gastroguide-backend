@@ -19,6 +19,7 @@ from app.api.users import router as users_router
 from app.api.favorites import router as favorites_router
 from app.api.profile import router as profile_router
 from app.api.ai_history import router as ai_history_router
+from app.api.reviews import router as reviews_router
 
 app = FastAPI()
 
@@ -44,6 +45,7 @@ app.include_router(users_router)
 app.include_router(favorites_router)
 app.include_router(profile_router)
 app.include_router(ai_history_router)
+app.include_router(reviews_router)
 
 
 @app.get("/")
