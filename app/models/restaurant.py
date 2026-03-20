@@ -4,7 +4,7 @@
 
 from datetime import datetime, timezone
 
-from sqlalchemy import String, Float, Integer, Boolean, DateTime, Text
+from sqlalchemy import String, Float, Integer, Boolean, DateTime, Text, ForeignKey
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -18,6 +18,13 @@ class Restaurant(Base):
 
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     type: Mapped[str] = mapped_column(String(100), nullable=False)
+
+    category_id: Mapped[int | None] = mapped_column(ForeignKey("categories.id"), nullable=True)
+
+    category = relationship("Category", back_populates="restaurants")
+    reviews_list = relationship("Review", back_populates="restaurant", cascade="all, delete-orphan")
+    saved_by_users = relationship("Favorite", back_populates="restaurant", cascade="all, delete-orphan")
+
     emoji: Mapped[str] = mapped_column(String(20), nullable=False)
     color: Mapped[str] = mapped_column(String(20), nullable=False)
     tag: Mapped[str] = mapped_column(String(100), nullable=False)
