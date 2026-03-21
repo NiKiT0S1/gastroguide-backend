@@ -1,3 +1,7 @@
+# SQLAlchemy-модель категории заведений.
+# Используется для нормализованного хранения категорий
+# и фильтрации ресторанов по category_id.
+
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 

@@ -1,3 +1,5 @@
+# Pydantic-схемы категорий заведений.
+
 from pydantic import BaseModel, ConfigDict
 
 

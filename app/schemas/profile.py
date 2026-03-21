@@ -1,3 +1,7 @@
+# Pydantic-схемы профиля пользователя.
+# Используются для получения профиля, обновления данных
+# и возврата статистики пользователя.
+
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field

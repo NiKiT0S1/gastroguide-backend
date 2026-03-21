@@ -1,9 +1,17 @@
+# Pydantic-схемы для отзывов.
+# Используются для создания, обновления
+# и возврата отзывов по ресторанам.
+
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
 
 class ReviewCreateRequest(BaseModel):
+    rating: int = Field(..., ge=1, le=5)
+    text: str = Field(..., min_length=3, max_length=1000)
+
+class ReviewUpdateRequest(BaseModel):
     rating: int = Field(..., ge=1, le=5)
     text: str = Field(..., min_length=3, max_length=1000)
 

@@ -1,3 +1,7 @@
+# SQLAlchemy-модель AI-сессии.
+# Описывает отдельный диалог пользователя с AI-ассистентом,
+# включая заголовок, preview и временные метки.
+
 from datetime import datetime, timezone
 from uuid import uuid4
 

@@ -1,3 +1,7 @@
+# API endpoints для аутентификации пользователей.
+# Файл отвечает за регистрацию, вход в систему
+# и обновление access token через refresh token.
+
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -17,11 +21,16 @@ from app.schemas.auth import (
     UserLoginRequest,
     UserRegisterRequest,
     UserResponse,
+    RefreshTokenRequest,
+    AccessTokenResponse,
 )
+
+from jose import JWTError, jwt
 
 router = APIRouter(prefix="/api/v1/auth", tags=["Auth"])
 
 
+# Регистрация нового пользователя
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register_user(request: UserRegisterRequest, db: Session = Depends(get_db)):
     existing_user_by_email = db.query(User).filter(User.email == request.email).first()
@@ -45,6 +54,7 @@ def register_user(request: UserRegisterRequest, db: Session = Depends(get_db)):
     return user
 
 
+# Вход пользователя в систему и выдача access/refresh токенов
 @router.post("/login", response_model=TokenResponse)
 def login_user(request: UserLoginRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == request.email).first()
@@ -68,3 +78,42 @@ def login_user(request: UserLoginRequest, db: Session = Depends(get_db)):
         access_token=access_token,
         refresh_token=refresh_token,
     )
+
+# Обновление access token по refresh token
+@router.post("/refresh", response_model=AccessTokenResponse)
+def refresh_access_token(request: RefreshTokenRequest, db: Session = Depends(get_db)):
+    try:
+        payload = jwt.decode(
+            request.refresh_token,
+            settings.secret_key,
+            algorithms=[settings.algorithm],
+        )
+
+        user_id: str = payload.get("sub")
+        token_type: str = payload.get("type")
+
+        if user_id is None or token_type != "refresh":
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid refresh token",
+            )
+
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid refresh token",
+        )
+
+    user = db.query(User).filter(User.id == int(user_id)).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found",
+        )
+
+    access_token = create_access_token(
+        subject=user.id,
+        expires_delta=timedelta(minutes=settings.access_token_expire_minutes),
+    )
+
+    return AccessTokenResponse(access_token=access_token)

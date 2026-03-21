@@ -1,3 +1,6 @@
+# Общие FastAPI dependencies проекта.
+# Файл содержит зависимости для обязательной и опциональной аутентификации пользователя по JWT.
+
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status

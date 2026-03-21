@@ -1,3 +1,7 @@
+# SQLAlchemy-модель сообщения AI-чата.
+# Хранит отдельные сообщения внутри AI-сессии,
+# включая роль отправителя и текст сообщения.
+
 from datetime import datetime, timezone
 from uuid import UUID
 

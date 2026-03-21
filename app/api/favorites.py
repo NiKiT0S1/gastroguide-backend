@@ -1,3 +1,7 @@
+# API endpoints для работы с избранными заведениями пользователя.
+# Файл отвечает за получение списка избранного,
+# добавление ресторана в избранное и удаление из избранного.
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 

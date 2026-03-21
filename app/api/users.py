@@ -1,3 +1,6 @@
+# API endpoints для работы с текущим авторизованным пользователем.
+# На текущем этапе файл содержит endpoint для получения данных пользователя по JWT.
+
 from fastapi import APIRouter, Depends
 
 from app.api.deps import get_current_user

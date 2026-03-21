@@ -1,4 +1,6 @@
-# Pydantic-схемы для валидации данных заведений.
+# Pydantic-схемы для заведений и меню.
+# Используются для валидации и сериализации данных ресторанов,
+# которые backend отправляет во frontend.
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field

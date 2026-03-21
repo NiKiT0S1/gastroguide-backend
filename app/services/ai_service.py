@@ -1,4 +1,6 @@
-# Бизнес-логика AI рекомендаций.
+# Сервисный слой AI-ассистента GastroGuide.
+# Здесь находится логика подготовки контекста по ресторанам,
+# истории диалога, избранному и nearby-заведениям для генерации ответа AI.
 
 import google.generativeai as genai
 from sqlalchemy.orm import Session
@@ -15,6 +17,7 @@ genai.configure(api_key=settings.gemini_api_key)
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 
+# Формирование контекста по заведениям, меню и акциям
 def build_restaurants_context(restaurants, menu_items, offers):
     text = ""
 
@@ -46,6 +49,7 @@ def build_restaurants_context(restaurants, menu_items, offers):
 
     return text
 
+# Формирование контекста истории диалога
 def build_history_context(history):
     if not history:
         return ""
@@ -57,6 +61,7 @@ def build_history_context(history):
 
     return "\n".join(lines)
 
+# Формирование контекста избранных заведений пользователя
 def build_favorites_context(favorites):
     if not favorites:
         return "User has no favorite restaurants yet."
@@ -66,6 +71,7 @@ def build_favorites_context(favorites):
         lines.append(f"- {r.name} ({r.type}, rating {r.rating}, price {r.price})")
     return "\n".join(lines)
 
+# Формирование nearby-контекста по координатам пользователя
 def build_nearby_context(lat: float | None, lng: float | None, restaurants: list[Restaurant], radius: int) -> str:
     if lat is None or lng is None:
         return "User coordinates were not provided."
@@ -95,6 +101,7 @@ def build_nearby_context(lat: float | None, lng: float | None, restaurants: list
 
     return "\n".join(lines)
 
+# Генерация AI-ответа на основе БД, истории, избранного и координат
 def generate_ai_response(
         message: str,
         history: list,

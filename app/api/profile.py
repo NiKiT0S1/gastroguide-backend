@@ -1,3 +1,7 @@
+# API endpoints профиля пользователя.
+# Файл отвечает за получение профиля, обновление данных профиля
+# и получение статистики пользователя.
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 

@@ -1,7 +1,6 @@
-# Endpoint для AI-рекомендаций.
-# Принимает сообщения пользователя,
-# отправляет запрос к AI logic,
-# возвращает ответ ассистента.
+# API endpoint для AI-ассистента GastroGuide.
+# Файл принимает сообщение пользователя, историю диалога и координаты,
+# а затем возвращает ответ AI с учётом базы заведений, избранного и nearby-контекста.
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session

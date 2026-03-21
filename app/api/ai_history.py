@@ -1,3 +1,7 @@
+# API endpoints для работы с историей AI-чата.
+# Файл отвечает за создание сессий, получение списка сессий
+# и получение сообщений конкретной AI-сессии пользователя.
+
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, status

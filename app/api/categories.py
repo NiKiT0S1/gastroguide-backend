@@ -1,3 +1,6 @@
+# API endpoint для получения списка категорий заведений.
+# Используется frontend'ом для фильтрации ресторанов по категориям.
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 

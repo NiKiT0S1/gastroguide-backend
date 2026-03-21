@@ -1,4 +1,4 @@
-# Pydantic-схемы для акций.
+# Pydantic-схемы для акций заведений.
 # Используются для валидации и возврата данных по offers.
 
 from pydantic import BaseModel, ConfigDict, Field

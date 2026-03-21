@@ -1,3 +1,5 @@
+# Pydantic-схемы для избранных заведений пользователя.
+
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict

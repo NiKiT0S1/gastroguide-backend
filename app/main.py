@@ -1,7 +1,6 @@
-# Главная точка входа backend-приложения.
-# Здесь создаётся экземпляр FastAPI,
-# подключаются роутеры,
-# настраивается CORS middleware.
+# Главная точка входа backend-приложения GastroGuide.
+# Здесь создаётся экземпляр FastAPI, подключаются роутеры,
+# настраивается CORS и собирается итоговая конфигурация API.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

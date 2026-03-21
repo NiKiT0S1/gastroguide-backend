@@ -1,5 +1,6 @@
 # SQLAlchemy-модель акции.
-# Описывает таблицу offers и связь с заведением.
+# Описывает таблицу offers и хранит информацию
+# о скидках и специальных предложениях заведений.
 
 from sqlalchemy import String, Integer, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship

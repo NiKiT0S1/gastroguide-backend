@@ -1,3 +1,7 @@
+# Конфигурация Alembic для работы с миграциями проекта.
+# Файл подключает metadata моделей и настройки БД,
+# чтобы Alembic мог сравнивать схемы и генерировать миграции.
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool

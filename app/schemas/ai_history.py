@@ -1,3 +1,5 @@
+# Pydantic-схемы для истории AI-сессий и сообщений.
+
 from datetime import datetime
 from uuid import UUID
 

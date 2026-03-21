@@ -1,3 +1,7 @@
+# SQLAlchemy-модель избранного.
+# Описывает связь пользователь ↔ ресторан
+# и хранит список сохранённых заведений пользователя.
+
 from datetime import datetime, timezone
 
 from sqlalchemy import DateTime, ForeignKey, Integer, UniqueConstraint

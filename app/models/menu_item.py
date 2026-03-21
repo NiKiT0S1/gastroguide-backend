@@ -1,5 +1,5 @@
 # SQLAlchemy-модель пункта меню.
-# Описывает таблицу menu_items и связь с заведением.
+# Описывает таблицу menu_items и связь конкретного блюда с рестораном.
 
 from sqlalchemy import String, Integer, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship

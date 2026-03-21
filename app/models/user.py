@@ -1,3 +1,7 @@
+# SQLAlchemy-модель пользователя.
+# Описывает таблицу users и связи пользователя
+# с избранным, отзывами и AI-сессиями.
+
 from datetime import datetime, timezone
 
 from sqlalchemy import DateTime, Integer, String

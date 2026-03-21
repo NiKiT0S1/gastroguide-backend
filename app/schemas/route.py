@@ -1,5 +1,6 @@
-# Pydantic-схемы ответа маршрута:
-# distance, duration, coordinates.
+# Pydantic-схемы маршрута.
+# Используются для возврата расстояния, длительности
+# и координат построенного маршрута.
 
 from pydantic import BaseModel
 

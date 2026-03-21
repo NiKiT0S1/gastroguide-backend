@@ -1,3 +1,7 @@
+# Модуль безопасности приложения.
+# Файл отвечает за хеширование паролей, проверку паролей
+# и создание JWT access/refresh token.
+
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
