@@ -2,7 +2,7 @@
 # получение списка заведений,
 # получение конкретного заведения по id.
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, selectinload
 from sqlalchemy import or_
 
@@ -22,8 +22,16 @@ def calculate_distance(lat1, lng1, lat2, lng2):
 router = APIRouter(prefix="/api/v1/restaurants", tags=["Restaurants"])
 
 @router.get("", response_model=list[RestaurantResponse])
-def get_restaurants(db: Session = Depends(get_db)):
-    restaurants = db.query(Restaurant).all()
+def get_restaurants(
+    category_id: int | None = Query(default=None),
+    db: Session = Depends(get_db),
+):
+    query = db.query(Restaurant)
+
+    if category_id is not None:
+        query = query.filter(Restaurant.category_id == category_id)
+
+    restaurants = query.all()
     return restaurants
 
 @router.get("/search", response_model=list[RestaurantResponse])
