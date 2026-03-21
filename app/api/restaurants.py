@@ -11,6 +11,7 @@ from app.models.restaurant import Restaurant
 from app.schemas.restaurant import RestaurantResponse, MenuItemResponse
 from app.models.menu_item import MenuItem
 from app.models.offer import Offer
+from app.services.location_service import haversine_distance
 
 ###############---Coordination Logic Without PostGIS---###############
 import math
@@ -51,19 +52,29 @@ def search_restaurants(q: str, db: Session = Depends(get_db)):
     return restaurants
 
 ######################################################################
-@router.get("/nearby")
-def get_nearby_restaurants(lat: float, lng: float, radius: int, db: Session = Depends(get_db)):
+@router.get("/nearby", response_model=list[RestaurantResponse])
+def get_nearby_restaurants(
+    lat: float = Query(...),
+    lng: float = Query(...),
+    radius: int = Query(1000, ge=1),
+    db: Session = Depends(get_db),
+):
     restaurants = db.query(Restaurant).all()
 
-    result = []
+    nearby_restaurants = []
 
-    for r in restaurants:
-        distance = calculate_distance(lat, lng, r.lat, r.lng)
+    for restaurant in restaurants:
+        if restaurant.lat is None or restaurant.lng is None:
+            continue
 
-        if distance <= radius:
-            result.append(r)
+        distance_m = haversine_distance(lat, lng, restaurant.lat, restaurant.lng)
 
-    return result
+        if distance_m <= radius:
+            nearby_restaurants.append((restaurant, distance_m))
+
+    nearby_restaurants.sort(key=lambda item: item[1])
+
+    return [restaurant for restaurant, _ in nearby_restaurants]
 ######################################################################
 
 @router.get("/{restaurant_id}/menu", response_model=list[MenuItemResponse])
