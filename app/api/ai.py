@@ -44,6 +44,9 @@ def chat_ai(
                 history=request.history,
                 favorites=favorites,
                 db=db,
+                lat=request.lat,
+                lng=request.lng,
+                radius=request.radius,
             )
             return {"response": answer}
 
@@ -88,6 +91,9 @@ def chat_ai(
             history=request.history,
             favorites=favorites,
             db=db,
+            lat=request.lat,
+            lng=request.lng,
+            radius=request.radius,
         )
 
         # Сохраняем ответ AI

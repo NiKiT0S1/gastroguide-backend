@@ -19,6 +19,10 @@ class AIRequest(BaseModel):
     history: list[AIMessage] = []
     session_id: UUID | None = None
 
+    lat: float | None = None
+    lng: float | None = None
+    radius: int = Field(default=2000, ge=1, le=10000)
+
 
 class AIResponse(BaseModel):
     response: str
