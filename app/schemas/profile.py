@@ -22,6 +22,10 @@ class ProfileUpdateRequest(BaseModel):
     name: str | None = Field(default=None, min_length=2, max_length=100)
     city: str | None = Field(default=None, min_length=2, max_length=100)
 
+class ChangePasswordRequest(BaseModel):
+    current_password: str = Field(..., min_length=6)
+    new_password: str = Field(..., min_length=6)
+
 
 class ProfileStatsResponse(BaseModel):
     restaurants_count: int
