@@ -81,3 +81,29 @@ def get_ai_session_messages(
     )
 
     return messages
+
+@router.delete("/{session_id}", status_code=status.HTTP_200_OK)
+def delete_ai_session(
+    session_id: UUID,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    session = (
+        db.query(AIChatSession)
+        .filter(
+            AIChatSession.id == session_id,
+            AIChatSession.user_id == current_user.id,
+        )
+        .first()
+    )
+
+    if not session:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Session not found",
+        )
+
+    db.delete(session)
+    db.commit()
+
+    return {"deleted": True}
