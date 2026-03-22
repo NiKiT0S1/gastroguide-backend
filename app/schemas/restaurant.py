@@ -45,6 +45,8 @@ class RestaurantResponse(BaseModel):
 
     menu: list[MenuItemResponse] = []
 
+    category_id: int | None = None
+
     model_config = ConfigDict(from_attributes=True)
 
 class RestaurantShortResponse(BaseModel):
