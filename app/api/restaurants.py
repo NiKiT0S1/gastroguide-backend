@@ -13,6 +13,10 @@ from app.models.menu_item import MenuItem
 from app.models.offer import Offer
 from app.services.location_service import haversine_distance
 from app.services.distance_service import apply_dynamic_distance_to_restaurant
+from app.services.opening_hours_service import (
+    apply_dynamic_open_status,
+    apply_dynamic_open_status_to_restaurants,
+)
 
 router = APIRouter(prefix="/api/v1/restaurants", tags=["Restaurants"])
 
@@ -29,6 +33,8 @@ def get_restaurants(
         query = query.filter(Restaurant.category_id == category_id)
 
     restaurants = query.all()
+
+    apply_dynamic_open_status_to_restaurants(restaurants)
 
     if lat is not None and lng is not None:
         for restaurant in restaurants:
@@ -56,6 +62,8 @@ def search_restaurants(
         .all()
     )
 
+    apply_dynamic_open_status_to_restaurants(restaurants)
+
     if lat is not None and lng is not None:
         for restaurant in restaurants:
             apply_dynamic_distance_to_restaurant(restaurant, lat, lng)
@@ -81,6 +89,7 @@ def get_nearby_restaurants(
         distance_m = haversine_distance(lat, lng, restaurant.lat, restaurant.lng)
 
         if distance_m <= radius:
+            apply_dynamic_open_status(restaurants)
             apply_dynamic_distance_to_restaurant(restaurant, lat, lng)
             nearby_restaurants.append((restaurant, distance_m))
 
@@ -110,6 +119,8 @@ def get_restaurant_by_id(restaurant_id: int, lat: float | None = Query(default=N
 
     if not restaurant:
         raise HTTPException(status_code=404, detail="Restaurant not found")
+
+    apply_dynamic_open_status(restaurant)
 
     if lat is not None and lng is not None:
         apply_dynamic_distance_to_restaurant(restaurant, lat, lng)
